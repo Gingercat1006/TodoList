@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.todo.features.task.mapper.TaskMapper">
+
+<select id = "findAllTask" resultType = "com.example.todo.features.task.dto.TaskResponse">
+select t.id,t.name,t.detail,c.name as categoryName,t.due_date as dueDate,t.status 
+from task as t left join category as c on t.category_id = c.category_id
+</select>
+
+<select id = "findById" resultType = "com.example.todo.features.task.dto.UpdateTaskResponse">
+select id,name,detail,category_id as "categoryId",due_date as "dueDate",status from task
+            where id = #{id}
+</select>
+
+<update id = "updateTask">
+update task 
+set name = #{name},
+  detail = #{detail},
+  category_id = #{categoryId},
+due_date = #{dueDate},
+  status = #{status} 
+  where id = #{id}
+</update>
+
+<insert id = "insertTask">
+insert into task(name,detail,category_id,due_date) 
+VALUES (#{name},#{detail},#{categoryId},#{dueDate})
+</insert>
+
+<delete id = "deleteTask">
+delete from task where id = #{id}
+</delete>
+
+
+</mapper>

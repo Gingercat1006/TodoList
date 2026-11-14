@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+    <title>Todoリスト</title>
+</head>
+
+<body>
+    <h1>Todo追加・編集・削除</h1>
+
+    <table>
+        <caption>Todoリスト</caption>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>やること</th>
+                <th>タスク詳細</th>
+                <th>カテゴリ名</th>
+                <th>締切日</th>
+                <th>ステータス</th>
+                <th>編集</th>
+                <th>削除</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="task : ${taskList}">
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.name}"></td>
+                <td th:text="${task.detail}"></td>
+                <td th:text="${task.categoryName}"></td><!--いったん検討放置-->
+                <td th:text="${task.dueDate}"></td><!--書き方いったん検討-->
+                <td th:text="${task.status}"></td>
+
+                <td><form th:action="@{/taskList/update}" method="post">
+                    <input type="hidden" name="id" th:value="${task.id}">
+                    <button type="submit" class="btn-update">編集</button>
+                </form>
+                </td>
+
+                <td><form th:action="@{/taskLists/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${task.id}"/>
+                    <button type="submit" class="btn-delete">削除</button>
+                </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
