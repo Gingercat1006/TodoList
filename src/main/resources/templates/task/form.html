@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+    <title>Todoリスト</title>
+</head>
+
+<body>
+    <h1>タスク追加・編集</h1>
+
+
+        <form th:action="@{/taskLists/update}" method="post" th:object="${task}">
+            <table>
+                <caption>編集画面</caption>
+                <thead>
+                    <tr>
+                        <th>タスクid</th>
+                        <th>やること</th>
+                        <th>タスク詳細</th>
+                        <th>カテゴリ名</th>
+                        <th>締切日</th>
+                        <th>ステータス</th>
+                        <th>完了</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><span th:text="*{id}"></span>
+                            <input type="hidden" th:field="*{id}">
+                        </td>
+                        <td><input type="text" th:field="*{name}"></td>
+                        <td><textarea th:field="*{detail}"></textarea></td>
+                        <td><select th:field="*{categoryId}">
+                                <option th:each="category: ${categories}" th:value="${category.categoryId}"
+                                    th:text="${category.name}">
+                                </option>
+                            </select>
+                        <td><input type="date" th:field="*{dueDate}"></td>
+
+
+                        </td>
+                        <td><select th:field="*{status}">
+                                <option th:value="false">未完了</option>
+                                <option th:value="true">完了</option>
+                            </select>
+                        </td>
+                        <td><button type="submit">更新</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+</body>
+
+</html>

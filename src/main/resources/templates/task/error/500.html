@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>サーバーエラー</title>
+</head>
+<body>
+    <h1>内部エラーが発生しました</h1>
+    <p>現在、サーバー内部で問題が発生しています。時間をおいて再度お試しください。</p>
+    <p th:text="'詳細: ' + ${message}"></p>
+    <p><a th:href="@{/}">トップページに戻る</a></p>
+</body>
+</html>

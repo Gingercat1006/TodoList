@@ -1,5 +1,6 @@
 package com.example.todo.features.category.dto;
 
-public class CategoryResponse {
-    
+public record CategoryResponse(
+                Long categoryId,
+                String name) {
 }

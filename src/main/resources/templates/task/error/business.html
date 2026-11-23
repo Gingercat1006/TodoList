@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>業務エラーが発生しました</title>
+</head>
+<body>
+    <h1>入力エラーが発生しました</h1>
+    <p th:text="'詳細: ' + ${message}"></p>
+    <p><a th:href="@{/}">トップページに戻る</a></p>
+</body>
+</html>

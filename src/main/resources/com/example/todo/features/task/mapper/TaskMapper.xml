@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.example.todo.features.task.mapper.TaskMapper">
 
 <select id = "findAllTask" resultType = "com.example.todo.features.task.dto.TaskResponse">
-select t.id,t.name,t.detail,c.name as categoryName,t.due_date as dueDate,t.status 
-from task as t left join category as c on t.category_id = c.category_id
+select t.id,t.name,t.detail,c.name as "categoryName",t.due_date as dueDate,t.status 
+from task as t left join category as c on t.category_id = c.category_id order by t.id
 </select>
 
 <select id = "findById" resultType = "com.example.todo.features.task.dto.UpdateTaskResponse">
