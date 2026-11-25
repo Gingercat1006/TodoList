@@ -17,6 +17,9 @@
     <a th:href="@{/taskLists/insert}">
         <button type="button">＋タスク追加</button>
     </a>
+    <a th:href="@{/categories}">
+        <button type="button">カテゴリ管理</button>
+    </a>
 
     <!-- ここまで -->
 
@@ -41,13 +44,16 @@
         </thead>
 
         <tbody>
+            <tr th:if="${#lists.isEmpty(taskList)}">
+                <td colspan="8">タスクがありません</td>
+            </tr>
             <tr th:each="task : ${taskList}">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.name}"></td>
                 <td th:text="${task.detail}"></td>
                 <td th:text="${task.categoryName}"></td>
                 <td th:text="${task.dueDate}"></td>
-                <td th:text="${task.status}"></td>
+                <td th:text="${task.status} ? '完了' : '未完了'"></td>
 
                 <td>
                     <form th:action="@{/taskLists/update}" method="get">

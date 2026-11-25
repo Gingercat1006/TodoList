@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.example.todo.features.task.dto.UpdateTaskResponse;
 import com.example.todo.features.task.service.TaskService;
 
 import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +33,6 @@ public class TaskController {
     public String list(Model model) {
         List<TaskResponse> tasks = taskService.findAllTask();
         model.addAttribute("taskList", tasks);
-        System.out.println(tasks);
         return "task/list";
     }
 
@@ -42,7 +43,7 @@ public class TaskController {
         List<CategoryResponse> categories = categoryService.findAllCategory();
         model.addAttribute("task", task);
         model.addAttribute("categories", categories);
-        System.out.println(task);
+        model.addAttribute("mode", "update");
         return "task/form";
     }
 
@@ -56,7 +57,16 @@ public class TaskController {
 
     // 編集画面の保存
     @PostMapping("/update")
-    public String updateTask(@ModelAttribute UpdateTaskRequest request) {
+    public String updateTask(
+            @Valid @ModelAttribute("task") UpdateTaskRequest request,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.findAllCategory());
+            model.addAttribute("mode", "update");
+            model.addAttribute("errors", bindingResult);
+            return "task/form";
+        }
         taskService.updateTask(request);
 
         return "redirect:/taskLists";
@@ -66,17 +76,24 @@ public class TaskController {
     @GetMapping("/insert")
     public String insertForm(Model model) {
         model.addAttribute("task", new CreateTaskRequest("", "", null, null));
-
-        model.addAttribute(
-                "categories",
-                categoryService.findAllCategory());
+        model.addAttribute("categories", categoryService.findAllCategory());
+        model.addAttribute("mode", "insert");
 
         return "task/form";
     }
 
     //新規タスク保存
     @PostMapping("/insert")
-    public String insertTask(@ModelAttribute CreateTaskRequest request) {
+    public String insertTask(
+            @Valid @ModelAttribute("task") CreateTaskRequest request,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.findAllCategory());
+            model.addAttribute("mode", "insert");
+            model.addAttribute("errors", bindingResult);
+            return "task/form";
+        }
         taskService.insertTask(request);
         return "redirect:/taskLists";
     }

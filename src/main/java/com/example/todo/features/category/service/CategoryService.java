@@ -18,19 +18,15 @@ public class CategoryService {
 
     //カテゴリ全件取得
     public List<CategoryResponse> findAllCategory() {
-        List<CategoryResponse> responses = categoryMapper.findAllCategory();
-        if(responses.isEmpty()){
-            throw new BusinessException("カテゴリがありません");
-        }
-        return responses;
+        return categoryMapper.findAllCategory();
     }
 
     //新たなカテゴリ追加
     public CategoryResponse insertCategory(CreateCategoryRequest request){
-        CategoryResponse response = categoryMapper.insertCategory(request);
-        if(response == null){
+        int inserted = categoryMapper.insertCategory(request);
+        if(inserted != 1){
             throw new BusinessException("カテゴリ登録に失敗しました");
         }
-        return response;
+        return new CategoryResponse(null, request.name());
     }
 }

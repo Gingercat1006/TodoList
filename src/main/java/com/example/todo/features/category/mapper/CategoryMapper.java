@@ -13,5 +13,5 @@ public interface CategoryMapper {
     List<CategoryResponse> findAllCategory();
 
     //新たなカテゴリを追加
-    CategoryResponse insertCategory(CreateCategoryRequest request);
+    int insertCategory(CreateCategoryRequest request);
 }

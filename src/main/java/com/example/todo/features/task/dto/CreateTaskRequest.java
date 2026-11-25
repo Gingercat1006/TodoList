@@ -3,10 +3,11 @@ package com.example.todo.features.task.dto;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record CreateTaskRequest(
-    @NotNull(message = "タスク名は必須です") 
+    @NotBlank(message = "タスク名は必須です")
     @Size(max = 50, message= "50文字以内でお願いします")
     String name,
 

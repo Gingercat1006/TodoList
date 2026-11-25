@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+    <title>カテゴリ追加</title>
+</head>
+<body>
+    <h1>カテゴリ追加</h1>
+    <form th:action="@{/categories/insert}" method="post" th:object="${category}">
+        <label for="name">カテゴリ名</label>
+        <input id="name" type="text" th:field="*{name}">
+        <span th:errors="*{name}"></span>
+        <button type="submit">追加</button>
+    </form>
+    <a th:href="@{/categories}">カテゴリ一覧へ戻る</a>
+</body>
+</html>

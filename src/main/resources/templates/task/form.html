@@ -12,43 +12,53 @@
     <h1>タスク追加・編集</h1>
 
 
-        <form th:action="@{/taskLists/update}" method="post" th:object="${task}">
+        <form th:action="${mode == 'insert'} ? @{/taskLists/insert} : @{/taskLists/update}"
+              method="post" th:object="${task}">
             <table>
                 <caption>編集画面</caption>
                 <thead>
                     <tr>
-                        <th>タスクid</th>
+                        <th th:if="${mode == 'update'}">タスクid</th>
                         <th>やること</th>
                         <th>タスク詳細</th>
                         <th>カテゴリ名</th>
                         <th>締切日</th>
-                        <th>ステータス</th>
-                        <th>完了</th>
+                        <th th:if="${mode == 'update'}">ステータス</th>
+                        <th th:if="${mode == 'update'}">完了</th>
+                        <th th:if="${mode == 'insert'}">追加</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td><span th:text="*{id}"></span>
+                        <td th:if="${mode == 'update'}"><span th:text="*{id}"></span>
                             <input type="hidden" th:field="*{id}">
                         </td>
-                        <td><input type="text" th:field="*{name}"></td>
-                        <td><textarea th:field="*{detail}"></textarea></td>
+                        <td>
+                            <input type="text" th:field="*{name}">
+                            <span th:errors="*{name}"></span>
+                        </td>
+                        <td>
+                            <textarea th:field="*{detail}"></textarea>
+                            <span th:errors="*{detail}"></span>
+                        </td>
                         <td><select th:field="*{categoryId}">
                                 <option th:each="category: ${categories}" th:value="${category.categoryId}"
                                     th:text="${category.name}">
                                 </option>
                             </select>
-                        <td><input type="date" th:field="*{dueDate}"></td>
-
-
                         </td>
-                        <td><select th:field="*{status}">
+                        <td>
+                            <input type="date" th:field="*{dueDate}">
+                            <span th:errors="*{dueDate}"></span>
+                        </td>
+                        <td th:if="${mode == 'update'}"><select th:field="*{status}">
                                 <option th:value="false">未完了</option>
                                 <option th:value="true">完了</option>
                             </select>
                         </td>
-                        <td><button type="submit">更新</button>
+                        <td th:if="${mode == 'update'}"><button type="submit">更新</button></td>
+                        <td th:if="${mode == 'insert'}"><button type="submit">追加</button>
                         </td>
                     </tr>
                 </tbody>

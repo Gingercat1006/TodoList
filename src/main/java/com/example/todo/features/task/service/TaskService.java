@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.todo.common.exception.BusinessException;
+import com.example.todo.common.exception.TaskNotFoundException;
 import com.example.todo.features.task.dto.CreateTaskRequest;
 import com.example.todo.features.task.dto.TaskResponse;
 import com.example.todo.features.task.dto.UpdateTaskRequest;
@@ -20,11 +21,7 @@ public class TaskService {
 
     // 全件取得
     public List<TaskResponse> findAllTask(){
-        List<TaskResponse> response = taskMapper.findAllTask();
-        if(response.isEmpty()){
-            throw new BusinessException("タスクが存在しません。");
-        }
-        return response;
+        return taskMapper.findAllTask();
     }
 
     // 削除
@@ -49,7 +46,7 @@ public class TaskService {
     public UpdateTaskResponse findById(Long id) {
         UpdateTaskResponse responses = taskMapper.findById(id);
         if(responses == null){
-            throw new BusinessException("更新対象のタスクがありません");
+            throw new TaskNotFoundException(id);
         }
         return responses;
     }

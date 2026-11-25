@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TaskNotFoundException.class)
     public String handleTaskNotFound(TaskNotFoundException e, Model model) {
         model.addAttribute("message", e.getMessage());
-        return "error/404";
+        return "task/error/404";
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
             BusinessException e,
             Model model) {
         model.addAttribute("message", e.getMessage());
-        return "error/business";
+        return "task/error/business";
     }
 
     @ExceptionHandler(Exception.class)
@@ -26,6 +26,6 @@ public class GlobalExceptionHandler {
             Exception e,
             Model model) {
         model.addAttribute("message", "予期しないエラーが発生しました");
-        return "error/500";
+        return "task/error/500";
     }
 }
